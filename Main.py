@@ -12,7 +12,8 @@ async def search_with_openai(api_key, prompt):
             {"role": "user", "content": prompt}
         ]
     )
-    return response.choices[0].message['content'].strip()
+    # Access the message content from the response
+    return response.choices[0].message.content.strip()
 
 # Function to run the async function in the Streamlit context
 def run_async_func(api_key, prompt):
@@ -42,3 +43,4 @@ if openai_access_token:
             st.write("Please enter a search query.")
 else:
     st.write("Please enter your OpenAI API Key.")
+
