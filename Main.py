@@ -1,6 +1,6 @@
 import streamlit as st
 import inspect
-import openai  # Make sure to import the openai package
+import openai
 
 # Monkey patch inspect.getargspec to use inspect.getfullargspec if it's not available
 if not hasattr(inspect, 'getargspec'):
@@ -20,12 +20,14 @@ if openai_access_token:
 
     # Example: Define a function to perform a search using OpenAI's GPT model
     def search_with_openai(prompt):
-        response = openai.Completion.create(
-            engine="text-davinci-003",
-            prompt=prompt,
-            max_tokens=100
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": prompt}
+            ]
         )
-        return response.choices[0].text.strip()
+        return response.choices[0].message['content'].strip()
 
     # Get search query from the user
     search_query = st.text_input("Enter your search query")
