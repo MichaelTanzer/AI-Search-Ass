@@ -1,10 +1,5 @@
 import streamlit as st
-import inspect
 import openai
-
-# Monkey patch inspect.getargspec to use inspect.getfullargspec if it's not available
-if not hasattr(inspect, 'getargspec'):
-    inspect.getargspec = inspect.getfullargspec
 
 # Set up the Streamlit app
 st.title("AI Search Assistant 🤖")
@@ -21,7 +16,7 @@ if openai_access_token:
     # Example: Define a function to perform a search using OpenAI's GPT model
     def search_with_openai(prompt):
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",  # or "gpt-4" if you have access
+            model="gpt-3.5-turbo",  # Use "gpt-4" if you have access
             messages=[
                 {"role": "system", "content": "You are a helpful assistant."},
                 {"role": "user", "content": prompt}
